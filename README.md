@@ -1,6 +1,9 @@
 # FloodPreventionSystem
 An IoT project for detecting and preventing floods caused by home appliances
 
+## FoodPreventionSystem (subfolder)
+
+This is a subfolder containing all current source code.
 
 ## ELTR2402_FinalDraft.pdf
 
