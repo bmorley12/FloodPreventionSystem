@@ -5,15 +5,16 @@
 #include <Arduino.h>
 
 class WaterSensor {
-  public:
-    WaterSensor(int pin);
-    void begin(void (*callback)()); 
-    bool isDetected();
-    void reset();
+    public:
+        WaterSensor(int pin);
+        void begin(void (*callback)()); 
+        bool isDetected();
+        void reset();
 
-  private:
-    int _pin;
-    volatile bool _triggered;
+    private:
+        int _pin;
+        volatile bool _triggered;
+
 };
 
 #endif

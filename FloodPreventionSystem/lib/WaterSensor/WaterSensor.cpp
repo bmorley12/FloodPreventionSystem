@@ -7,7 +7,7 @@ WaterSensor::WaterSensor(int pin) {
 
 void WaterSensor::begin(void (*callback)()) {
     pinMode(_pin, INPUT_PULLUP);
-    
+
     // Attach the interrupt to the function passed from main.cpp
     attachInterrupt(digitalPinToInterrupt(_pin), callback, FALLING);
 }
@@ -19,3 +19,4 @@ bool WaterSensor::isDetected() {
 void WaterSensor::reset() {
     _triggered = false;
 }
+
