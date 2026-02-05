@@ -1,5 +1,9 @@
 # FloodPreventionSystem
-An IoT project for detecting and preventing floods caused by home appliances
+An IoT project for detecting and preventing floods caused by home appliances.
+
+## Setup:
+
+Edit FloodPreventionSystem/private_secrets_template.ini with your wifi name and passwod, and rename the file to private_secrets.ini. Then load the project should be easily flashed to any ESP8266 microcontroller using the Platform.io extension in VS Code.
 
 ## FoodPreventionSystem (subfolder)
 
