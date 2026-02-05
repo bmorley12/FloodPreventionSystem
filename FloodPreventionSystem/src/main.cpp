@@ -40,7 +40,6 @@ void IRAM_ATTR onWaterDetected() {
     water_sensor.reset();
 }
 
-
 void setup() {
     Serial.begin(9600);
     delay(1000);
@@ -75,7 +74,6 @@ void loop() {
     delay(1000);  //debounce delay
 
 }
-
 
 // Basic 2.4GHz WiFi connection
 void wifi_connect() {
