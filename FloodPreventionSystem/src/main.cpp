@@ -16,10 +16,6 @@ const int VALVE2_PIN = D6;
 const int WATER_SENSOR_PIN = D7;
 
 
-// FLAGS
-volatile bool waterAlert = false;
-
-
 // Objects
 WaterSensor water_sensor(WATER_SENSOR_PIN);
 TempAndHumiditySensor t_and_h_sensor;
@@ -32,6 +28,7 @@ void IRAM_ATTR onWaterDetected() {
     Serial.println("!!! WATER DETECTED !!!");
 
     valve1.turn_off();
+    delay(100);         // delay to avoid too much current draw all at once
     valve2.turn_off();
 
     // TODO: Notify user
@@ -53,12 +50,12 @@ void setup() {
     water_sensor.begin(onWaterDetected);
     delay(2000);
 
-    // REQUIRES FURTHER TROUBLESHOOTING WITH WORKING SENSOR
-    // while( t_and_h_sensor.begin(SDA_PIN, SCL_PIN) != 0){
-    //     Serial.printf("Unable to connect with temp/humidity sensor\n");
-    //     digitalWrite(LED_BUILTIN, LOW);
-    //     delay(200);
-    // }
+    
+    while( t_and_h_sensor.begin(SDA_PIN, SCL_PIN) != 0){
+        Serial.printf("Unable to connect with temp/humidity sensor\n");
+        digitalWrite(LED_BUILTIN, LOW);     // Turn LED on so error is visable without serial monitor
+        delay(200);
+    }
 
 
     Serial.printf("System ready: \n");
@@ -66,13 +63,11 @@ void setup() {
 }
 
 void loop() {
-    // REQUIRES FURTHER TROUBLESHOOTING WITH WORKING SENSOR
-    // t_and_h_sensor.read_sensors();
-    // Serial.printf("Temp: %.2f\n", t_and_h_sensor.get_temp());
-    // Serial.printf("Humidity: %.2f\n", t_and_h_sensor.get_humidity());
+    t_and_h_sensor.read_sensors();
+    Serial.printf("Temp: %.2f\n", t_and_h_sensor.get_temp());
+    Serial.printf("Humidity: %.2f\n", t_and_h_sensor.get_humidity());
 
-    delay(1000);  //debounce delay
-
+    delay(5000);  //debounce delay
 }
 
 // Basic 2.4GHz WiFi connection
@@ -92,6 +87,7 @@ void wifi_connect() {
         Serial.printf(".");
     }
 
+    digitalWrite(LED_BUILTIN, HIGH);        // Make sure LED is off
     Serial.printf("\nConnected! \nIP Address: ");
     Serial.println(WiFi.localIP());
 }
