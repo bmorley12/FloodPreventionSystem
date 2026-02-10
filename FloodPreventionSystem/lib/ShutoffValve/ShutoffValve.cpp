@@ -1,7 +1,7 @@
 #include "ShutoffValve.h"
 
 ShutoffValve::ShutoffValve(int pin, int min_pulse, int max_pulse) {
-    _shutoff = false;
+    _shutoff = false;           // true if water is off, false if water is on
     _min_pulse = min_pulse;
     _max_pulse = max_pulse;
 
@@ -10,13 +10,17 @@ ShutoffValve::ShutoffValve(int pin, int min_pulse, int max_pulse) {
 }
 
 void ShutoffValve::turn_off() {
-    _shutoff = true;
-    _move_to_angle(90);
+    if(!_shutoff){
+        _shutoff = true;
+        _move_to_angle(90);
+    }
 }
 
 void ShutoffValve::turn_on() {
-    _shutoff = false;
-    _move_to_angle(0);
+    if(_shutoff){
+        _shutoff = false;
+        _move_to_angle(0);
+    }
 }
 
 bool ShutoffValve::shutoff_status() {
@@ -27,6 +31,6 @@ void ShutoffValve::_move_to_angle(int angle) {
     int pulse = map(angle * 100, 0, 27000, _min_pulse, _max_pulse);
     _valve.writeMicroseconds(pulse);
 
-    // delay(2000);        // delay for movement, comment out for prod
+    delay(100); // delay for movement
 }
 
